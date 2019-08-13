@@ -20,7 +20,6 @@ num_btns.forEach(function(button) {
             dot = true;
         result_displayed = false;
         updateDisplay(num);
-        
         });
     });
 
@@ -96,10 +95,10 @@ function operate(operator, a, b){
         }
         
         if(result === Infinity)
-            throw "error";
+            throw ERROR;
     }
     catch(e){
-        reset(ERROR);
+        reset(e);
         return;
     }
     clearable = true;
@@ -107,7 +106,6 @@ function operate(operator, a, b){
     dot=false;
     updateDisplay(result);
     accumulator = result;
-
 }
 
 function updateDisplay(new_text){
@@ -115,14 +113,13 @@ function updateDisplay(new_text){
         clearDisplay();
         clearable = false;
     }
-    
     let text = displayText.innerHTML;
     displayText.innerHTML = text === "0" ? text = new_text:text += new_text;
 }
 
 function reset(type){
     if (type === ERROR)
-        displayText.innerHTML = "nan";
+        displayText.innerHTML = "NaN";
     else
         displayText.innerHTML = "0";
     accumulator = 0;
