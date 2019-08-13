@@ -43,7 +43,7 @@ backspaceBtn.addEventListener("click",(e) =>{
 
 let body = document.querySelector("body");
     
-    body.addEventListener("keyup",function(e){
+body.addEventListener("keyup",function(e){
     document.querySelector("#hidden").focus();
     let key = parseInt(e.which);
     let number = 0;
@@ -163,6 +163,7 @@ function reset(type){
     pendingOperation = "";
     clearable = true;
     result_displayed = false;
+    dot = false;
 }
 function clearDisplay(){
     displayText.innerHTML = "0";
