@@ -1,31 +1,34 @@
 const ERROR = 1;
 const NORMAL = 2;
+const ADD = "+";
+const SUB = "-";
+const MUL = "x";
+const DIV = "÷";
+const EQU = "=";
+const operators = [ADD, SUB, MUL, DIV, EQU, EQU];
+const nonkeypad_operation_keys = [61, 173, 56, 191];
+const keypad_operation_keys = [107, 109, 106, 111, 13];
+const numeric_keys = [48, 57, 96, 105]; //, 61, 13
+
 let num_btns = document.querySelectorAll("button.numeric");
 let op_btns = document.querySelectorAll("button.operators");
 let clear_btn = document.querySelector(".clear");
 let displayText = document.querySelector("#display_text");
 let backspaceBtn = document.querySelector("#backspace_btn");
 let accumulator = 0;
-let operation = "";
+let pendingOperation = "";
 let clearable = false;
 let dot = false;
 let result_displayed = false;
 
 num_btns.forEach(function(button) {
     button.addEventListener("click", (e) => {
-        let num = e.target.textContent;
-        if (dot === true && num ===".")
-            return;
-        else if(num === "." && dot === false)
-            dot = true;
-        result_displayed = false;
-        updateDisplay(num);
+        addNumericInput(e.target.textContent);
         });
     });
 
 op_btns.forEach(function(button) {
     button.addEventListener("click", (e) => {
-        let op = e.target.textContent;
         prepareOperation(e.target.textContent);
         });
     });
@@ -38,6 +41,40 @@ backspaceBtn.addEventListener("click",(e) =>{
     removeLastDigit();
 })
 
+let body = document.querySelector("body");
+    
+    body.addEventListener("keyup",function(e){
+    document.querySelector("#hidden").focus();
+    let key = parseInt(e.which);
+    let number = 0;
+    
+    if (between(key, numeric_keys[0], numeric_keys[1]) && !e.shiftKey){ //numeric
+        number = key-numeric_keys[0];
+        addNumericInput(number);
+    }
+    else if (between(key, numeric_keys[2], numeric_keys[3]) && !e.shiftKey){ // numeric keypad
+        number = key-numeric_keys[2];
+        addNumericInput(number);
+    }
+    else if(keypad_operation_keys.includes(key) && !e.shiftKey){ //operations
+        prepareOperation(operators[keypad_operation_keys.indexOf(key)]);
+    }
+    else if(nonkeypad_operation_keys.includes(key) || e.shiftKey){
+        prepareOperation(operators[nonkeypad_operation_keys.indexOf(key)]);
+    }
+});
+function addNumericInput(num){
+    if (dot === true && num ===".")
+    return;
+    else if(num === "." && dot === false)
+        dot = true;
+    result_displayed = false;
+    updateDisplay(num);
+}
+
+function between(x, min, max) { 
+    return x >= min && x <= max;
+  }
 function removeLastDigit(){
     if (result_displayed === true)
         reset(NORMAL);  
@@ -65,11 +102,11 @@ function divide(a, b){
 function prepareOperation(op){
     let currentNumber = parseFloat(displayText.innerHTML);
     
-    if(operation === "")
+    if(pendingOperation === "")
         accumulator = currentNumber;
     else
-        operate(operation, accumulator, currentNumber);
-    operation = (op === "=") ? "" : op;
+        operate(pendingOperation, accumulator, currentNumber);
+    pendingOperation = (op === EQU) ? "" : op;
     clearable = true;
     dot = false;
 }
@@ -78,16 +115,16 @@ function operate(operator, a, b){
     let result = 0;
     try{
         switch(operator){
-            case "+":
+            case ADD:
                 result = add(a, b);
                 break;
-            case "-":
+            case SUB:
                 result = substract(a, b);
                 break;
-            case "x":
+            case MUL:
                 result = multiply(a, b);
                 break;
-            case "÷":
+            case DIV:
                 result = divide(a, b);
                 break;
 
@@ -123,7 +160,7 @@ function reset(type){
     else
         displayText.innerHTML = "0";
     accumulator = 0;
-    operation = "";
+    pendingOperation = "";
     clearable = true;
     result_displayed = false;
 }
