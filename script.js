@@ -5,10 +5,13 @@ const SUB = "-";
 const MUL = "x";
 const DIV = "÷";
 const EQU = "=";
+const DOT = ".";
+
 const operators = [ADD, SUB, MUL, DIV, EQU, EQU];
 const nonkeypad_operation_keys = [61, 173, 56, 191];
 const keypad_operation_keys = [107, 109, 106, 111, 13];
 const numeric_keys = [48, 57, 96, 105]; //, 61, 13
+const dot_keycodes = [110, 190];
 
 let num_btns = document.querySelectorAll("button.numeric");
 let op_btns = document.querySelectorAll("button.operators");
@@ -18,7 +21,7 @@ let backspaceBtn = document.querySelector("#backspace_btn");
 let accumulator = 0;
 let pendingOperation = "";
 let clearable = false;
-let dot = false;
+let dotFlag = false;
 let result_displayed = false;
 
 num_btns.forEach(function(button) {
@@ -50,24 +53,29 @@ body.addEventListener("keyup",function(e){
     
     if (between(key, numeric_keys[0], numeric_keys[1]) && !e.shiftKey){ //numeric
         number = key-numeric_keys[0];
+        
         addNumericInput(number);
     }
     else if (between(key, numeric_keys[2], numeric_keys[3]) && !e.shiftKey){ // numeric keypad
         number = key-numeric_keys[2];
         addNumericInput(number);
     }
-    else if(keypad_operation_keys.includes(key) && !e.shiftKey){ //operations
+    else if(dot_keycodes.includes(key)){ // check for dot
+        addNumericInput(DOT);
+    }
+    else if(keypad_operation_keys.includes(key) && !e.shiftKey){ //operations on keypad
         prepareOperation(operators[keypad_operation_keys.indexOf(key)]);
     }
-    else if(nonkeypad_operation_keys.includes(key) || e.shiftKey){
+    else if(nonkeypad_operation_keys.includes(key) || e.shiftKey){ //operation on non keypad
         prepareOperation(operators[nonkeypad_operation_keys.indexOf(key)]);
     }
+
 });
 function addNumericInput(num){
-    if (dot === true && num ===".")
+    if (dotFlag === true && num ===".")
     return;
-    else if(num === "." && dot === false)
-        dot = true;
+    else if(num === "." && dotFlag === false)
+        dotFlag = true;
     result_displayed = false;
     updateDisplay(num);
 }
@@ -81,7 +89,7 @@ function removeLastDigit(){
     else{
         let last_digit = displayText.innerHTML.slice(-1);
         if (last_digit === ".")
-            dot = false;
+            dotFlag = false;
         displayText.innerHTML = displayText.innerHTML.slice(0,-1)
     }
 }
@@ -108,7 +116,7 @@ function prepareOperation(op){
         operate(pendingOperation, accumulator, currentNumber);
     pendingOperation = (op === EQU) ? "" : op;
     clearable = true;
-    dot = false;
+    dotFlag = false;
 }
 
 function operate(operator, a, b){
@@ -163,7 +171,7 @@ function reset(type){
     pendingOperation = "";
     clearable = true;
     result_displayed = false;
-    dot = false;
+    dotFlag = false;
 }
 function clearDisplay(){
     displayText.innerHTML = "0";
