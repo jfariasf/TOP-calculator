@@ -71,6 +71,7 @@ function prepareOperation(op){
         operate(operation, accumulator, currentNumber);
     operation = (op === "=") ? "" : op;
     clearable = true;
+    dot = false;
 }
 
 function operate(operator, a, b){
@@ -93,7 +94,6 @@ function operate(operator, a, b){
             default:
                 break;
         }
-        
         if(result === Infinity)
             throw ERROR;
     }
@@ -103,7 +103,6 @@ function operate(operator, a, b){
     }
     clearable = true;
     result_displayed = true;
-    dot=false;
     updateDisplay(result);
     accumulator = result;
 }
@@ -114,7 +113,8 @@ function updateDisplay(new_text){
         clearable = false;
     }
     let text = displayText.innerHTML;
-    displayText.innerHTML = text === "0" ? text = new_text:text += new_text;
+    if(text.length < 25)
+        displayText.innerHTML = text === "0" ? text = new_text:text += new_text;
 }
 
 function reset(type){
@@ -124,7 +124,6 @@ function reset(type){
         displayText.innerHTML = "0";
     accumulator = 0;
     operation = "";
-    dot = false;
     clearable = true;
     result_displayed = false;
 }
