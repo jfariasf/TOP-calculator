@@ -1,3 +1,5 @@
+const ERROR = 1;
+const NORMAL = 2;
 let num_btns = document.querySelectorAll("button.numeric");
 let op_btns = document.querySelectorAll("button.operators");
 let clear_btn = document.querySelector(".clear");
@@ -30,7 +32,7 @@ op_btns.forEach(function(button) {
     });
 
 clear_btn.addEventListener("click",(e) =>{
-    reset();
+    reset(NORMAL);
 })
 
 backspaceBtn.addEventListener("click",(e) =>{
@@ -39,7 +41,7 @@ backspaceBtn.addEventListener("click",(e) =>{
 
 function removeLastDigit(){
     if (result_displayed === true)
-        reset();  
+        reset(NORMAL);  
     else{
         let last_digit = displayText.innerHTML.slice(-1);
         if (last_digit === ".")
@@ -92,9 +94,13 @@ function operate(operator, a, b){
             default:
                 break;
         }
+        
+        if(result === Infinity)
+            throw "error";
     }
     catch(e){
-        updateDisplay("nan");
+        reset(ERROR);
+        return;
     }
     clearable = true;
     result_displayed = true;
@@ -114,8 +120,11 @@ function updateDisplay(new_text){
     displayText.innerHTML = text === "0" ? text = new_text:text += new_text;
 }
 
-function reset(){
-    displayText.innerHTML = "0";
+function reset(type){
+    if (type === ERROR)
+        displayText.innerHTML = "nan";
+    else
+        displayText.innerHTML = "0";
     accumulator = 0;
     operation = "";
     dot = false;
