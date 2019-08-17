@@ -6,6 +6,7 @@ const MUL = "x";
 const DIV = "÷";
 const EQU = "=";
 const DOT = ".";
+const FAILMSG = "NaN";
 
 const operators = [ADD, SUB, MUL, DIV, EQU, EQU];
 const nonkeypad_operation_keys = [61, 173, 56, 191];
@@ -158,13 +159,13 @@ function updateDisplay(new_text){
         clearable = false;
     }
     let text = displayText.innerHTML;
-    if(text.length < 25)
+    if(text.length < 21)
         displayText.innerHTML = text === "0" ? text = new_text:text += new_text;
 }
 
 function reset(type){
     if (type === ERROR)
-        displayText.innerHTML = "NaN";
+        displayText.innerHTML = FAILMSG;
     else
         displayText.innerHTML = "0";
     accumulator = 0;

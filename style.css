@@ -1,54 +1,63 @@
 html body{
     margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    
+}
+body{
+    padding-bottom: 100px;
 }
 #title{
-    padding: 20px;
     text-align: center;
 }
-
+.numeric{
+    color: #417586;
+}
 #container{
-    margin-top: 50px;
+    margin-top: 100px;
     background-color: #fff;
     height: auto;
-    width: 300px;
-    padding: 30px;
-    border-radius: 25px 25px 5px 5px;
-    border: 1px solid rgb(49,209,169, 1);;
-    box-shadow: 2px 4px 4px rgb(49,209,169, 0.5);
+    width: 430px;
+
+   /* padding: 30px;*/
+    /*border-radius: 25px 25px 5px 5px;*/
+   /* border: 1px solid rgb(49,209,169, 1);;*/
+    box-shadow: -2px 1px 60px 0px #00abe5
 
 }
 #display{
     background-color: #fff;
-    height: 50px;
+    height: 150px;
     display:flex;
-    /*align-items: center;
-    justify-content: right;*/
-
-    border: 1px solid rgb(49,209,169, 1);;
+    align-items: end;
+    justify-content: right;
+    background-color: #00abe5;
+    
+    /*border: 1px solid rgb(49,209,169, 1);*/
 }
 #display_text{
-    padding-right: 5px;
-    color: rgb(49,209,169, 1);
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: auto;
+    padding-right: 10px;
+    color: white;
+    font-size: 1.9em;
+    max-width: 430px;
+
 }
 #buttons_container{
     display: grid;
     grid-template-columns: 0px repeat(4,1fr) 0px;
     grid-template-rows: 0px repeat(5,1fr) 0px;
-    margin-top: 10px;
+    height: 500px;
+   /* margin-top: 10px;*/
 }
 
 .calc_buttons{
     padding: 10px 10px 10px 10px;
     border: 0;
     background-color: #fff;
-    color: rgb(49,209,169, 1);
+    color: #00abe5;
+    font-size: 1.6em;
 
 }
 button:active,
@@ -62,7 +71,7 @@ button:active:focus {
 }
 
 .functionbtns{
-    background-color: rgb(49,209,169, 0.2);
+    background-color: #dcf5fe;
 }
 #divide_btn{
     grid-column-start: 2;
@@ -96,8 +105,9 @@ button:active:focus {
     grid-column-end: 6;
     grid-row-start: 5;
     grid-row-end: 7;
-    background-color: rgb(49,209,169, 0.8);
-    color: #fff;
+    background-color: #95e2fd;
+    color: white;
+    font-weight: bold;
 
 }
 
@@ -174,7 +184,7 @@ button:active:focus {
     grid-column-end: 6;
     grid-row-start: 2;
     grid-row-end: 3;
-    color: rgb(255, 0, 0, 0.5);
+    
 }
 #clear_btn{
     grid-column-start: 5;
