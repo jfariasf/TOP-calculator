@@ -20,10 +20,6 @@ body{
     background-color: #fff;
     height: auto;
     width: 430px;
-
-   /* padding: 30px;*/
-    /*border-radius: 25px 25px 5px 5px;*/
-   /* border: 1px solid rgb(49,209,169, 1);;*/
     box-shadow: -2px 1px 60px 0px #00abe5
 
 }
@@ -34,8 +30,6 @@ body{
     align-items: flex-end;
     flex-flow: column-reverse;
     background-color: #00abe5;
-    
-    /*border: 1px solid rgb(49,209,169, 1);*/
 }
 #display_text{
     padding-right: 10px;
@@ -49,17 +43,14 @@ body{
     grid-template-columns: 0px repeat(4,1fr) 0px;
     grid-template-rows: 0px repeat(5,1fr) 0px;
     height: 500px;
-   /* margin-top: 10px;*/
 }
 
 .calc_buttons{
-    /*padding: 10px 10px 10px 10px;*/
     padding: 0px;
     border: 0;
     background-color: #fff;
     color: #00abe5;
     font-size: 1.6em;
-
 }
 button:active,
 button:focus,
@@ -201,3 +192,37 @@ button:active:focus {
     margin-top: -50px;
     z-index: -99;
 }
+@media only screen and (max-width: 500px) {
+    body{
+        padding-bottom: 0px;
+    }
+    #container{
+        margin-top: 0px;
+        background-color: #fff;
+        height: auto;
+        width: 100%;
+        box-shadow: -2px 1px 60px 0px #00abe5
+    
+    }
+    #display{
+        background-color: #fff;
+        height: 130px;
+        display:flex;
+        align-items: flex-end;
+        flex-flow: column-reverse;
+        background-color: #00abe5;
+    }
+    #display_text{
+        padding-right: 10px;
+        color: white;
+        font-size: 1.9em;
+        max-width: 100%;
+    
+    }
+    #buttons_container{
+        display: grid;
+        grid-template-columns: 0px repeat(4,1fr) 0px;
+        grid-template-rows: 0px repeat(5,1fr) 0px;
+        height: 500px;
+    }
+  }
