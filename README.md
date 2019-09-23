@@ -6,4 +6,4 @@ This was created for the TOP calculator project using Javascript.
  <img src="https://i.imgur.com/tNHupqU.png">
 </p>
 
-Created by: Javier Arias
+Created by: Javier Arias.
